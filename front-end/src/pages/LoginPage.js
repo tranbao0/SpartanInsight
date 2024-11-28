@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import './LoginPage.css';  // Add your CSS styles
+import './LoginPage.css';
 
-const LoginPage = () => {
+const LoginPage = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation (Optional: Add more complex validation if needed)
     if (!email || !password) {
       setError("Email and password are required.");
       return;
@@ -26,13 +25,12 @@ const LoginPage = () => {
       setError('');
       const response = await axios.post('http://localhost:5000/api/auth/login', userData);
 
-      // Store the token in local storage upon successful login
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
-        navigate('/'); // Redirect to the home page after login
+        setIsLoggedIn(true); // update state to trigger re-render
+        navigate('/home');
       }
     } catch (err) {
-      console.error('Login error:', err.response ? err.response.data : err.message);
       setError('Invalid credentials. Please try again.');
     } finally {
       setLoading(false);
@@ -79,7 +77,7 @@ const LoginPage = () => {
               <button 
                 type="button" 
                 className="signup-link" 
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate('/signup')} // Sign up redirect button
               >
                 Don't have an account? Sign up
               </button>

@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import ProfessorList from "./components/ProfessorList";
 import ProfessorDetails from "./components/ProfessorDetails";
 import HomePage from "./pages/HomePage";
@@ -7,23 +7,37 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import CreateProfessor from './pages/CreateProfessor';
 import AddReview from './pages/AddReview';
+import LoggedInHomePage from "./pages/LoggedInHomePage";
 
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-function App() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   return (
     <Router>
       <Routes>
+        {/* public routes */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/professors" element={<ProfessorList />} />
-        <Route path="/professors/:id" element={<ProfessorDetails />} />
-        <Route path="/create-professor" element={<CreateProfessor />} />
-        <Route path="/professors/:id/add-review" element={<AddReview />} />
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <SignUpPage />} />
+
+        {/* private routes */}
+        <Route path="/home" element={isLoggedIn ? <LoggedInHomePage setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
+        <Route path="/professors" element={isLoggedIn ? <ProfessorList /> : <Navigate to="/login" />} />
+        <Route path="/professors/:id" element={isLoggedIn ? <ProfessorDetails /> : <Navigate to="/login" />} />
+        <Route path="/create-professor" element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} />
+        <Route path="/professors/:id/add-review" element={isLoggedIn ? <AddReview /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
-}
-// test comment
+};
 
 export default App;
