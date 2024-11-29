@@ -1,12 +1,13 @@
 const path = require('path');
 const express = require('express');
-const connectDB = require('./config/db');  // MongoDB connection
+const connectDB = require('./config/db'); // MongoDB connection
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const courseRoutes = require('./routes/courseRoutes'); // Import course routes
 require('dotenv').config();
-// test comment
+
 const app = express();
 
 // Connect to MongoDB
@@ -18,26 +19,30 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/professors', professorRoutes);
-app.use('/api/reviews', reviewRoutes);
-app.use('/api', professorRoutes); 
+app.use('/api/professors', professorRoutes); // Professors routes
+app.use('/api/reviews', reviewRoutes); // Reviews routes
+app.use('/api/courses', courseRoutes); // New courses routes
 
+// Test routes
 app.get('/', (req, res) => {
   res.send('Welcome to Spartan Insight API!');
 });
 
 app.get('/test', (req, res) => {
-    res.send('Test route working');
+  res.send('Test route working');
 });
 
-app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+// Serve static files from React app (in production)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'frontend', 'build')));
 
-app.get('*', (req, res) => {
+  app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-});
+  });
+}
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

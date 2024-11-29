@@ -22,6 +22,14 @@
   --button-gap: 1rem;
 }
 
+body {
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%;
+  height: 133.33%;
+  overflow-x: hidden; 
+}
+
 
 /* Global styles */
 body {

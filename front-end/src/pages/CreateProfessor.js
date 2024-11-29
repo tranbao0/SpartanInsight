@@ -25,7 +25,7 @@ const CreateProfessor = () => {
           },
         }
       );
-      navigate('/professors');
+      navigate('/home'); // Redirect to the LoggedInHomePage route
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create professor.');
     }

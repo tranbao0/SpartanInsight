@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import CreateProfessor from './pages/CreateProfessor';
 import AddReview from './pages/AddReview';
 import LoggedInHomePage from "./pages/LoggedInHomePage";
+import CreateCourse from './pages/CreateCourse'; // Import CreateCourse component
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/professors/:id" element={isLoggedIn ? <ProfessorDetails /> : <Navigate to="/login" />} />
         <Route path="/create-professor" element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} />
         <Route path="/professors/:id/add-review" element={isLoggedIn ? <AddReview /> : <Navigate to="/login" />} />
+        <Route path="/create-course" element={isLoggedIn ? <CreateCourse /> : <Navigate to="/login" />} /> {/* Added route */}
       </Routes>
     </Router>
   );

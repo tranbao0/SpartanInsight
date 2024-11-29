@@ -1,124 +1,132 @@
 import React, { useEffect, useState } from 'react';
-import './HomePage.css';
-import './LoggedInHomePage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import ProfessorList from '../components/ProfessorList';
 
 const LoggedInHomePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the query parameter for "view"
+  const queryParams = new URLSearchParams(location.search);
+  const initialView = queryParams.get('view') || 'professors'; // Default to "professors"
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeView, setActiveView] = useState(initialView); // Set initial view from query param
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const title = document.querySelector('.home-page header h1');
-    let lastX = 0;
-    let lastY = 0;
-    let animationFrameId = null;
-    const easeAmount = 0.08;
-
-    const handleMouseMove = (e) => {
-      if (title) {
-        const rect = title.getBoundingClientRect();
-        const titleCenterX = rect.left + rect.width / 2;
-        const titleCenterY = rect.top + rect.height / 2;
-
-        const deltaX = e.clientX - titleCenterX;
-        const deltaY = e.clientY - titleCenterY;
-
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        const maxDistance = Math.sqrt(
-          window.innerWidth * window.innerWidth +
-          window.innerHeight * window.innerHeight
-        );
-
-        const minOffset = 8;
-        const maxOffset = 12;
-        const normalizedOffset =
-          minOffset + (distance / maxDistance) * (maxOffset - minOffset);
-
-        const safeDistance = Math.max(distance, 0.1);
-
-        const targetX = -(deltaX / safeDistance) * normalizedOffset;
-        const targetY = -(deltaY / safeDistance) * normalizedOffset;
-
-        const updateShadow = () => {
-          lastX += (targetX - lastX) * easeAmount;
-          lastY += (targetY - lastY) * easeAmount;
-
-          const movement =
-            Math.abs(targetX - lastX) + Math.abs(targetY - lastY);
-
-          if (movement < 0.01) {
-            lastX = targetX;
-            lastY = targetY;
-          }
-
-          lastX = Math.min(Math.max(lastX, -maxOffset), maxOffset);
-          lastY = Math.min(Math.max(lastY, -maxOffset), maxOffset);
-
-          title.style.textShadow = `${lastX}px ${lastY}px 0 var(--school-gold)`;
-
-          animationFrameId = requestAnimationFrame(updateShadow);
-        };
-
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
+    const fetchCourses = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Unauthorized: Please log in to view data.');
         }
-        updateShadow();
+
+        const coursesRes = await axios.get('http://localhost:5000/api/courses', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setCourses(coursesRes.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to fetch courses.');
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
+    if (activeView === 'courses') {
+      fetchCourses();
+    }
+  }, [activeView]);
 
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, []);
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const renderList = () => {
+    if (activeView === 'professors') {
+      return (
+        <>
+          <ProfessorList />
+          <div className="create-professor-link">
+            <button
+              className="tiny-link"
+              onClick={() => navigate('/create-professor')}
+            >
+              + Add Professor
+            </button>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <h2>Courses</h2>
+          {courses.length > 0 ? (
+            courses.map((course) => (
+              <div key={course._id} className="course-item">
+                <h3 className="course-title">
+                  {`${course.prefix || 'N/A'} ${course.number || '000'} - ${course.name || 'Unnamed Course'}`}
+                </h3>
+                <div className="course-description">
+                  {course.description || 'No description available.'}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No courses available.</p>
+          )}
+          <div className="create-professor-link">
+            <button
+              className="tiny-link"
+              onClick={() => navigate('/create-course')}
+            >
+              + Add Course
+            </button>
+          </div>
+        </>
+      );
+    }
+  };
 
   return (
-    <section className="home-page">
-      <div className="main-header">
-        <div
-          className="hamburger-container"
-          onMouseEnter={() => setIsSidebarOpen(true)}
-          onMouseLeave={() => setIsSidebarOpen(false)}
-        >
-          <button className="hamburger-button">&#9776;</button>
-        </div>
-      </div>
-      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <button
-          className="button"
-          onClick={() => {
-            localStorage.removeItem('token');
-            navigate('/login');
-          }}
-        >
-          Logout
-        </button>
-      </div>
-      <div className="main-content">
-        <header>
-          <h1>
-            <strong>Welcome Back</strong>
-          </h1>
-        </header>
-        <input
-          type="text"
-          aria-label="search"
-          placeholder="Search Course or Professor"
-        />
-        <div className="content-buttons">
-          <button className="button" onClick={() => navigate('/courses')}>
-            View Courses
-          </button>
-          <button className="button" onClick={() => navigate('/professors')}>
+    <div>
+      <header>
+        <button onClick={toggleSidebar}>&#9776;</button>
+        <h1>Welcome Back</h1>
+      </header>
+
+      {isSidebarOpen && (
+        <aside>
+          <button onClick={logout}>Logout</button>
+        </aside>
+      )}
+
+      <main>
+        <div className="toggle-buttons">
+          <button
+            onClick={() => setActiveView('professors')}
+            className={activeView === 'professors' ? 'active' : ''}
+          >
             View Professors
           </button>
+          <button
+            onClick={() => setActiveView('courses')}
+            className={activeView === 'courses' ? 'active' : ''}
+          >
+            View Courses
+          </button>
         </div>
-      </div>
-    </section>
+
+        <div className="list-container">{renderList()}</div>
+        {error && <p className="error-message">{error}</p>}
+      </main>
+    </div>
   );
 };
 
