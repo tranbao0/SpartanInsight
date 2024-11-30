@@ -1,0 +1,65 @@
+.course-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .course-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .course-header h1 {
+    margin-bottom: 10px;
+  }
+  
+  .add-review-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .add-review-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .reviews-section {
+    margin-top: 40px;
+  }
+  
+  .reviews-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .review-item {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .review-comment {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .review-rating {
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .review-user {
+    color: #888;
+    text-align: right;
+  }
+  
+  .course-details-error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }

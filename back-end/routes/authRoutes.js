@@ -21,10 +21,8 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'user already exists' });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const user = new User({ username, email, password: hashedPassword });
+    // Remove the manual hashing - let the pre-save middleware handle it
+    const user = new User({ username, email, password });
     await user.save();
 
     res.status(201).json({ message: 'user registered successfully' });
@@ -33,12 +31,9 @@ router.post('/register', async (req, res) => {
   }
 });
 
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'please provide all fields' });
-  }
 
   try {
     const user = await User.findOne({ email });
@@ -47,7 +42,8 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'invalid credentials' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    // Use the matchPassword method from your User model
+    const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
       return res.status(400).json({ message: 'invalid credentials' });
@@ -64,5 +60,6 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'server error' });
   }
 });
+
 
 module.exports = router;

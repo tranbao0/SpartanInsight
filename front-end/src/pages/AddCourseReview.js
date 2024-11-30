@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './AddReview.css';
 
-const AddReview = () => {
-  const { id: professorId } = useParams(); // Extract professorId from the URL
+const AddCourseReview = () => {
+  const { id: courseId } = useParams();
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const AddReview = () => {
       await axios.post(
         'http://localhost:5000/api/reviews',
         {
-          professorId, // Send professorId in the request body
+          courseId,
           rating,
           comment,
         },
@@ -33,16 +33,16 @@ const AddReview = () => {
         }
       );
 
-      navigate(`/professors/${professorId}`); // Redirect back to the professor's review page
+      navigate(`/courses/${courseId}`); // Changed to redirect to specific course page
     } catch (error) {
-      console.error(error);
-      alert('Failed to submit review');
+      console.error('Error details:', error.response?.data || error.message);
+      alert('Failed to submit review: ' + (error.response?.data?.message || 'Unknown error'));
     }
   };
 
   return (
     <div className="add-review-container">
-      <h1 className="add-review-header">Add a Review</h1>
+      <h1 className="add-review-header">Add a Review for the Course</h1>
       <form onSubmit={handleSubmit} className="add-review-form">
         <label className="form-label">
           Rating (1-5):
@@ -70,11 +70,10 @@ const AddReview = () => {
         </button>
       </form>
 
-      {/* Back to Home Button */}
       <div className="back-button-container">
         <button
           className="back-button"
-          onClick={() => navigate('/home')} // Navigate to the LoggedInHomePage
+          onClick={() => navigate('/home')}
         >
           Back to Home
         </button>
@@ -83,4 +82,4 @@ const AddReview = () => {
   );
 };
 
-export default AddReview;
+export default AddCourseReview;

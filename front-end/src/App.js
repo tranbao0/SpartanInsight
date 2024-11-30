@@ -5,10 +5,13 @@ import ProfessorDetails from "./components/ProfessorDetails";
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-import CreateProfessor from './pages/CreateProfessor';
-import AddReview from './pages/AddReview';
+import CreateProfessor from "./pages/CreateProfessor";
+import AddReview from "./pages/AddReview";
 import LoggedInHomePage from "./pages/LoggedInHomePage";
-import CreateCourse from './pages/CreateCourse'; // Import CreateCourse component
+import CreateCourse from "./pages/CreateCourse";
+import AddCourseReview from "./pages/AddCourseReview";
+import CourseList from "./components/CourseList";
+import CourseDetails from "./components/CourseDetails";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,18 +28,58 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* public routes */}
+        {/* Public routes */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/signup" element={isLoggedIn ? <Navigate to="/home" /> : <SignUpPage />} />
+        <Route 
+          path="/login" 
+          element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} 
+        />
+        <Route 
+          path="/signup" 
+          element={isLoggedIn ? <Navigate to="/home" /> : <SignUpPage />} 
+        />
 
-        {/* private routes */}
-        <Route path="/home" element={isLoggedIn ? <LoggedInHomePage setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} />
-        <Route path="/professors" element={isLoggedIn ? <ProfessorList /> : <Navigate to="/login" />} />
-        <Route path="/professors/:id" element={isLoggedIn ? <ProfessorDetails /> : <Navigate to="/login" />} />
-        <Route path="/create-professor" element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} />
-        <Route path="/professors/:id/add-review" element={isLoggedIn ? <AddReview /> : <Navigate to="/login" />} />
-        <Route path="/create-course" element={isLoggedIn ? <CreateCourse /> : <Navigate to="/login" />} /> {/* Added route */}
+        {/* Private routes */}
+        <Route 
+          path="/home" 
+          element={isLoggedIn ? <LoggedInHomePage setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/login" />} 
+        />
+        
+        {/* Professor routes */}
+        <Route 
+          path="/professors" 
+          element={isLoggedIn ? <ProfessorList /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/professors/:id" 
+          element={isLoggedIn ? <ProfessorDetails /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/create-professor" 
+          element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/professors/:id/add-review" 
+          element={isLoggedIn ? <AddReview /> : <Navigate to="/login" />} 
+        />
+
+        {/* Course routes */}
+        <Route 
+          path="/courses" 
+          element={isLoggedIn ? <CourseList /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/courses/:id" 
+          element={isLoggedIn ? <CourseDetails /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/create-course" 
+          element={isLoggedIn ? <CreateCourse /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/courses/:id/add-review" 
+          element={isLoggedIn ? <AddCourseReview /> : <Navigate to="/login" />} 
+        />
       </Routes>
     </Router>
   );

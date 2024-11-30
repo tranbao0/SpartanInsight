@@ -59,3 +59,21 @@ textarea.form-input {
 .submit-button:hover {
   background-color: #0056b3;
 }
+
+.back-button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #2980b9;
+}
+
+

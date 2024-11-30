@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import ProfessorList from '../components/ProfessorList';
 
 const LoggedInHomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get the query parameter for "view"
   const queryParams = new URLSearchParams(location.search);
-  const initialView = queryParams.get('view') || 'professors'; // Default to "professors"
+  const initialView = queryParams.get('view') || 'professors';
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeView, setActiveView] = useState(initialView); // Set initial view from query param
+  const [activeView, setActiveView] = useState(initialView);
+  const [professors, setProfessors] = useState([]);
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    const fetchProfessors = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Unauthorized: Please log in to view data.');
+        }
+
+        const professorsRes = await axios.get('http://localhost:5000/api/professors', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setProfessors(professorsRes.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Failed to fetch professors.');
+      }
+    };
+
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -34,7 +50,9 @@ const LoggedInHomePage = () => {
       }
     };
 
-    if (activeView === 'courses') {
+    if (activeView === 'professors') {
+      fetchProfessors();
+    } else if (activeView === 'courses') {
       fetchCourses();
     }
   }, [activeView]);
@@ -48,11 +66,56 @@ const LoggedInHomePage = () => {
     navigate('/login');
   };
 
+  const renderProfessors = () => {
+    return professors.length > 0 ? (
+      professors.map((professor) => (
+        <div key={professor._id} className="professor-item">
+          <div className="professor-details">
+            <p className="professor-name">{professor.name}</p>
+            <p className="professor-department">Department: {professor.department}</p>
+          </div>
+          <button
+            className="add-review-button"
+            onClick={() => navigate(`/professors/${professor._id}/add-review`)}
+          >
+            Add Review
+          </button>
+        </div>
+      ))
+    ) : (
+      <p>No professors available.</p>
+    );
+  };
+
+  const renderCourses = () => {
+    return courses.length > 0 ? (
+      courses.map((course) => (
+        <div key={course._id} className="course-item">
+          <div className="course-details">
+            <h3 className="course-title">
+              {`${course.prefix || 'N/A'} ${course.number || '000'} - ${course.name || 'Unnamed Course'}`}
+            </h3>
+            <p className="course-description">{course.description || 'No description available.'}</p>
+          </div>
+          <button
+            className="add-review-button"
+            onClick={() => navigate(`/courses/${course._id}/add-review`)}
+          >
+            Add Review
+          </button>
+        </div>
+      ))
+    ) : (
+      <p>No courses available.</p>
+    );
+  };
+
   const renderList = () => {
     if (activeView === 'professors') {
       return (
         <>
-          <ProfessorList />
+          <h2>Professors</h2>
+          <div className="list-container">{renderProfessors()}</div>
           <div className="create-professor-link">
             <button
               className="tiny-link"
@@ -67,21 +130,8 @@ const LoggedInHomePage = () => {
       return (
         <>
           <h2>Courses</h2>
-          {courses.length > 0 ? (
-            courses.map((course) => (
-              <div key={course._id} className="course-item">
-                <h3 className="course-title">
-                  {`${course.prefix || 'N/A'} ${course.number || '000'} - ${course.name || 'Unnamed Course'}`}
-                </h3>
-                <div className="course-description">
-                  {course.description || 'No description available.'}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No courses available.</p>
-          )}
-          <div className="create-professor-link">
+          <div className="list-container">{renderCourses()}</div>
+          <div className="create-course-link">
             <button
               className="tiny-link"
               onClick={() => navigate('/create-course')}
@@ -123,8 +173,8 @@ const LoggedInHomePage = () => {
           </button>
         </div>
 
-        <div className="list-container">{renderList()}</div>
         {error && <p className="error-message">{error}</p>}
+        {renderList()}
       </main>
     </div>
   );

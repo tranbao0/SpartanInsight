@@ -1,37 +1,31 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
-// Middleware to check if the user is authenticated (i.e., has a valid JWT)
 const protect = (req, res, next) => {
-  let token;
+    let token;
 
-  // Check if token is provided in headers
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      token = req.headers.authorization.split(' ')[1];
-      console.log("Token extracted:", token);  // Log token to see if it's extracted correctly
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        try {
+            token = req.headers.authorization.split(' ')[1];
+            console.log("Token extracted:", token); // Log the token
 
-      // Decode the token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded JWT:", decoded);  // Log the decoded token
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            console.log("Decoded JWT:", decoded); // Log the decoded token payload
 
-      // Add the user info from decoded token to the request object
-      req.user = decoded;  // Make sure decoded contains user data (e.g., _id, username, email)
-      console.log("req.user populated:", req.user);  // Verify req.user after it's populated
+            req.user = decoded; // Populate req.user with the decoded token data
+            console.log("req.user populated:", req.user); // Log req.user to verify
 
-      next(); // Continue with the request
-    } catch (err) {
-      console.error("JWT verification failed:", err);  // Log error if token verification fails
-      return res.status(401).json({ message: 'Not authorized, token failed' });
+            next(); // Proceed to the next middleware or route
+        } catch (err) {
+            console.error("JWT verification failed:", err); // Log the error
+            return res.status(401).json({ message: 'Not authorized, token failed' });
+        }
+    } else {
+        console.log("No token provided"); // Log if no token is provided
+        return res.status(401).json({ message: 'Not authorized, no token' });
     }
-  }
-
-  if (!token) {
-    console.log("No token provided");  // Log if no token is provided
-    return res.status(401).json({ message: 'Not authorized, no token' });
-  }
 };
 
 module.exports = { protect };
