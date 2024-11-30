@@ -6,10 +6,8 @@ import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import CreateProfessor from "./pages/CreateProfessor";
-import AddReview from "./pages/AddReview";
 import LoggedInHomePage from "./pages/LoggedInHomePage";
 import CreateCourse from "./pages/CreateCourse";
-import AddCourseReview from "./pages/AddCourseReview";
 import CourseList from "./components/CourseList";
 import CourseDetails from "./components/CourseDetails";
 
@@ -58,10 +56,6 @@ const App = () => {
           path="/create-professor" 
           element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} 
         />
-        <Route 
-          path="/professors/:id/add-review" 
-          element={isLoggedIn ? <AddReview /> : <Navigate to="/login" />} 
-        />
 
         {/* Course routes */}
         <Route 
@@ -75,10 +69,6 @@ const App = () => {
         <Route 
           path="/create-course" 
           element={isLoggedIn ? <CreateCourse /> : <Navigate to="/login" />} 
-        />
-        <Route 
-          path="/courses/:id/add-review" 
-          element={isLoggedIn ? <AddCourseReview /> : <Navigate to="/login" />} 
         />
       </Routes>
     </Router>

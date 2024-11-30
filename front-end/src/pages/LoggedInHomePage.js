@@ -76,9 +76,9 @@ const LoggedInHomePage = () => {
           </div>
           <button
             className="add-review-button"
-            onClick={() => navigate(`/professors/${professor._id}/add-review`)}
+            onClick={() => navigate(`/professors/${professor._id}`)}
           >
-            Add Review
+            View/Add Review
           </button>
         </div>
       ))
@@ -99,9 +99,9 @@ const LoggedInHomePage = () => {
           </div>
           <button
             className="add-review-button"
-            onClick={() => navigate(`/courses/${course._id}/add-review`)}
+            onClick={() => navigate(`/courses/${course._id}`)}
           >
-            Add Review
+            View/Add Review
           </button>
         </div>
       ))
