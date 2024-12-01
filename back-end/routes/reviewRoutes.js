@@ -1,6 +1,7 @@
 const express = require('express');
 const Review = require('../models/Review');
 const Professor = require('../models/Professor');
+const Course = require('../models/Course');
 const { protect } = require('../middleware/authMiddleware'); // Assuming you have JWT middleware
 const router = express.Router();
 
@@ -8,7 +9,7 @@ const router = express.Router();
 router.post('/', protect, async (req, res) => {
   console.log("Inside createReview route:");
   console.log("req.user at start:", req.user); // Log req.user immediately
-  const { professorId, rating, comment } = req.body;
+  const { courseId, professorId, rating, comment } = req.body;
 
   try {
     // Check if the user object is correctly populated
@@ -24,8 +25,14 @@ router.post('/', protect, async (req, res) => {
       return res.status(404).json({ message: 'Professor not found' });
     }
 
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
     // Create a new review
     const review = new Review({
+      course: courseId,
       professor: professorId,
       user: req.user.id, // The authenticated user
       rating,
@@ -39,6 +46,7 @@ router.post('/', protect, async (req, res) => {
     const reviews = await Review.find({ professor: professorId });
     const avgRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
     professor.rating = avgRating;
+    course.rating = avgRating;
     await professor.save();
 
     res.status(201).json({ message: 'Review created successfully', review });
@@ -60,5 +68,18 @@ router.get('/:professorId', async (req, res) => {
     res.status(500).json({ message: 'Error fetching reviews' });
   }
 });
+
+router.get('/:courseId', async (req, res) => {
+  const { courseId } = req.params;
+
+  try {
+    const reviews = await Review.find({ course: courseId }).populate('user', 'name'); // Populate user data if needed
+    res.status(200).json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching reviews' });
+  }
+});
+
 
 module.exports = router;

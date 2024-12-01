@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './AddReview.css'; // Assuming CSS file is named AddReview.css
 
 const AddReview = () => {
+  const { id: courseId } = useParams(); 
   const { id: professorId } = useParams(); // Extract professorId from the URL
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
@@ -22,6 +23,7 @@ const AddReview = () => {
       await axios.post(
         'http://localhost:5000/api/reviews',
         {
+          courseId,
           professorId, // Send professorId in the request body
           rating,
           comment,

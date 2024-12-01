@@ -4,6 +4,7 @@ const connectDB = require('./config/db');  // MongoDB connection
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const professorRoutes = require('./routes/professorRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 require('dotenv').config();
 // test comment
@@ -19,6 +20,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/professors', professorRoutes);
+app.use('/api/courses', courseRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api', professorRoutes); 
 

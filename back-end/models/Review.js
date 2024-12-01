@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 // Define schema for reviews
 const reviewSchema = mongoose.Schema({
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+    required: true,
+  },
   professor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Professor',
