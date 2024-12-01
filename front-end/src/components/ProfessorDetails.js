@@ -3,37 +3,48 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ProfessorDetails.css';
 
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+  
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload).id;
+  } catch (error) {
+    return null;
+  }
+};
+
 const ProfessorDetails = () => {
   const { id } = useParams();
   const [professor, setProfessor] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem('token');
   
-  // New state for review form
   const [isAddingReview, setIsAddingReview] = useState(false);
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
 
-  useEffect(() => {
-    fetchProfessorDetails();
-  }, [id]);
-
   const fetchProfessorDetails = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Unauthorized: Please log in to view professor details.');
-      }
-      const response = await axios.get(`http://localhost:5000/api/professors/${id}/reviews`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(`http://localhost:5000/api/professors/${id}/reviews`);
       setProfessor(response.data.professor);
       setReviews(response.data.reviews);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load professor details.');
     }
   };
+
+  useEffect(() => {
+    fetchProfessorDetails();
+  }, [id]);
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
@@ -59,7 +70,6 @@ const ProfessorDetails = () => {
         }
       );
 
-      // Reset form and fetch updated reviews
       setRating('');
       setComment('');
       setIsAddingReview(false);
@@ -84,15 +94,17 @@ const ProfessorDetails = () => {
         <h1>{professor.name}</h1>
         <p>{professor.department}</p>
         <p>Rating: {professor.rating ? professor.rating.toFixed(1) : 'No rating yet'} / 5</p>
-        <button
-          className="add-review-button"
-          onClick={() => setIsAddingReview(!isAddingReview)}
-        >
-          {isAddingReview ? '- Cancel Review' : '+ Add Review'}
-        </button>
+        {isLoggedIn && (
+          <button
+            className="add-review-button"
+            onClick={() => setIsAddingReview(!isAddingReview)}
+          >
+            {isAddingReview ? '- Cancel Review' : '+ Add Review'}
+          </button>
+        )}
       </div>
 
-      {isAddingReview && (
+      {isLoggedIn && isAddingReview && (
         <div className="add-review-section">
           <form onSubmit={handleSubmitReview} className="add-review-form">
             <label className="form-label">
@@ -126,7 +138,7 @@ const ProfessorDetails = () => {
       <div className="reviews-section">
         <h2>Reviews</h2>
         {reviews.length === 0 ? (
-          <p>No reviews yet. Be the first to add one!</p>
+          <p>No reviews yet. {isLoggedIn ? 'Be the first to add one!' : 'Log in to add the first review!'}</p>
         ) : (
           <ul className="reviews-list">
             {reviews.map((review) => (
@@ -134,7 +146,9 @@ const ProfessorDetails = () => {
                 <p className="review-comment">"{review.comment}"</p>
                 <p className="review-rating">Rating: {review.rating} / 5</p>
                 <p className="review-user">
-                  - {review.user ? review.user.username : 'Anonymous'}
+                  {review.user && review.user._id === getUserIdFromToken() 
+                    ? '- You'
+                    : '- Anonymous'}
                 </p>
               </li>
             ))}
@@ -145,9 +159,9 @@ const ProfessorDetails = () => {
       <div className="back-button-container">
         <button
           className="back-button"
-          onClick={() => navigate('/home')}
+          onClick={() => navigate(isLoggedIn ? '/home' : '/listings')}
         >
-          Back to Home
+          Back to {isLoggedIn ? 'Home' : 'Listings'}
         </button>
       </div>
     </div>

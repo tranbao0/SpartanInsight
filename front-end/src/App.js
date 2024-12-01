@@ -10,6 +10,7 @@ import LoggedInHomePage from "./pages/LoggedInHomePage";
 import CreateCourse from "./pages/CreateCourse";
 import CourseList from "./components/CourseList";
 import CourseDetails from "./components/CourseDetails";
+import ListingsPage from "./pages/ListingsPage";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +29,9 @@ const App = () => {
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/listings" element={<ListingsPage />} />
+        <Route path="/professors/:id" element={<ProfessorDetails isPublic={true} />} />
+        <Route path="/courses/:id" element={<CourseDetails isPublic={true} />} />
         <Route 
           path="/login" 
           element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage setIsLoggedIn={setIsLoggedIn} />} 
@@ -49,10 +53,6 @@ const App = () => {
           element={isLoggedIn ? <ProfessorList /> : <Navigate to="/login" />} 
         />
         <Route 
-          path="/professors/:id" 
-          element={isLoggedIn ? <ProfessorDetails /> : <Navigate to="/login" />} 
-        />
-        <Route 
           path="/create-professor" 
           element={isLoggedIn ? <CreateProfessor /> : <Navigate to="/login" />} 
         />
@@ -61,10 +61,6 @@ const App = () => {
         <Route 
           path="/courses" 
           element={isLoggedIn ? <CourseList /> : <Navigate to="/login" />} 
-        />
-        <Route 
-          path="/courses/:id" 
-          element={isLoggedIn ? <CourseDetails /> : <Navigate to="/login" />} 
         />
         <Route 
           path="/create-course" 

@@ -106,6 +106,7 @@ const HomePage = () => {
       }
     };
   }, []);
+
   return (
     <section className="home-page">
       <div className="main-header">
@@ -125,8 +126,8 @@ const HomePage = () => {
         </header>
         <input type="text" aria-label="search" placeholder="Search Course or Professor" />
         <div className="content-buttons">
-          <button className="button" onClick={() => navigate('/courses')}>View Courses</button>
-          <button className="button" onClick={() => navigate('/professors')}>View Professors</button>
+          <button className="button" onClick={() => navigate('/listings?view=courses')}>View Courses</button>
+          <button className="button" onClick={() => navigate('/listings?view=professors')}>View Professors</button>
         </div>
       </div>
     </section>

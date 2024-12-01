@@ -1,6 +1,15 @@
 const Professor = require('../models/Professor');
-const Review = require('../models/Review');  // Import the Review model
+const Review = require('../models/Review');
 
+exports.getAllProfessors = async (req, res) => {
+    try {
+        const professors = await Professor.find();
+        res.json(professors);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
 
 exports.createProfessor = async (req, res) => {
     try {
@@ -12,6 +21,7 @@ exports.createProfessor = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
 exports.getProfessorWithReviews = async (req, res) => {
     try {
         const professorId = req.params.id;

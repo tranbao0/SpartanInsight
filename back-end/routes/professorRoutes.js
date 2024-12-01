@@ -29,8 +29,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Fetch a professor and their reviews
-router.get('/:id/reviews', protect, getProfessorWithReviews);
+// Fetch a professor and their reviews - removed protect middleware
+router.get('/:id/reviews', getProfessorWithReviews);
 
 // Create a new professor (protected route)
 router.post('/', protect, async (req, res) => {
