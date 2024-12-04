@@ -36,9 +36,16 @@ const CourseList = () => {
             className="course-button"
             onClick={() => navigate(`/courses/${course._id}`)}
           >
+<<<<<<< HEAD
             {`${course.prefix} ${course.number} - ${course.name}`}
           </button>
         ))}
+=======
+            {course.name}
+          </button>
+        ))}
+        
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
       </div>
       <div className="create-course-link">
         <button className="tiny-link" onClick={() => navigate('/create-course')}>
@@ -49,4 +56,8 @@ const CourseList = () => {
   );
 };
 
+<<<<<<< HEAD
 export default CourseList;
+=======
+export default CourseList;
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b

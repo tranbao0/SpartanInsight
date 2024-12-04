@@ -4,6 +4,7 @@ const connectDB = require('./config/db'); // MongoDB connection
 const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const professorRoutes = require('./routes/professorRoutes');
+const courseRoutes = require('./routes/courseRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const courseRoutes = require('./routes/courseRoutes'); // Import course routes
 const searchRoutes = require('./routes/search');
@@ -20,10 +21,17 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+<<<<<<< HEAD
 app.use('/api/professors', professorRoutes); // Professors routes
 app.use('/api/reviews', reviewRoutes); // Reviews routes
 app.use('/api/courses', courseRoutes); // New courses routes
 app.use('/api/search', searchRoutes);
+=======
+app.use('/api/professors', professorRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api', professorRoutes); 
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
 
 // Test routes
 app.get('/', (req, res) => {

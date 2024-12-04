@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import './CreateProfessor.css'; // Reuse the same CSS for styling
 
 const CreateCourse = () => {
@@ -9,6 +10,12 @@ const CreateCourse = () => {
   const [name, setName] = useState('');
   const [prerequisites, setPrerequisites] = useState('');
   const [description, setDescription] = useState('');
+=======
+import './CreateCourse.css';
+
+const CreateCourse = () => {
+  const [name, setName] = useState('');
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -21,6 +28,7 @@ const CreateCourse = () => {
       }
       await axios.post(
         'http://localhost:5000/api/courses',
+<<<<<<< HEAD
         { 
           prefix, 
           number: parseInt(number, 10), // Ensure number is stored as an integer
@@ -28,19 +36,27 @@ const CreateCourse = () => {
           prerequisites: prerequisites.split(',').map((p) => p.trim()), // Split and trim prerequisites
           description 
         },
+=======
+        { name },
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+<<<<<<< HEAD
       navigate('/home?view=courses'); // Redirect to the courses list view
+=======
+      navigate('/courses');
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create course.');
     }
   };
 
   return (
+<<<<<<< HEAD
     <div className="create-professor">
       <h1>Create Course</h1>
       <form className="create-professor-form" onSubmit={handleSubmit}>
@@ -66,6 +82,13 @@ const CreateCourse = () => {
         </div>
         <div className="form-group">
           <label>Course Name:</label>
+=======
+    <div className="create-course">
+      <h1>Create Course</h1>
+      <form className="create-course-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Name:</label>
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
           <input
             type="text"
             value={name}
@@ -74,6 +97,7 @@ const CreateCourse = () => {
             required
           />
         </div>
+<<<<<<< HEAD
         <div className="form-group">
           <label>Prerequisites:</label>
           <input
@@ -93,6 +117,8 @@ const CreateCourse = () => {
             required
           />
         </div>
+=======
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
         {error && <p className="error-message">{error}</p>}
         <button type="submit" className="primary-button">
           Create

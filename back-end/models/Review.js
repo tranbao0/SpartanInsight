@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 // Define schema for reviews
+<<<<<<< HEAD
 const reviewSchema = mongoose.Schema(
   {
     professor: {
@@ -32,6 +33,18 @@ const reviewSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+=======
+const reviewSchema = mongoose.Schema({
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course',
+    required: true,
+  },
+  professor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Professor',
+    required: true,
+>>>>>>> edaac74835e9838b33e3ed231f31b8d043caf16b
   },
   {
     timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields
