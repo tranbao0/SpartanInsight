@@ -1,0 +1,184 @@
+.course-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .course-header {
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .course-header h1 {
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  
+  .add-review-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .add-review-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-review-section {
+    margin: 20px 0;
+  }
+  
+  .add-review-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 15px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  textarea.form-input {
+    min-height: 100px;
+  }
+  
+  .submit-button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  .reviews-section {
+    margin-top: 40px;
+  }
+  
+  .reviews-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .review-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .review-comment {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .review-rating {
+    color: #666;
+    margin-bottom: 5px;
+  }
+  
+  .review-user {
+    color: #888;
+    text-align: right;
+    font-size: 0.9em;
+  }
+  
+  .back-button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .back-button {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #5a6268;
+  }
+  
+  .course-details-error {
+    color: red;
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .reaction-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .reaction-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .reaction-button:hover {
+    background: #f0f0f0;
+  }
+  
+  .reaction-button.active {
+    background: var(--school-blue);
+    color: white;
+  }
+  
+  .review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .review-user {
+    margin: 0;
+  }
+  
+  .review-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: white;
+  }
+  
+  .review-comment {
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  
+  .review-rating {
+    color: #666;
+    margin-bottom: 5px;
+  }
+

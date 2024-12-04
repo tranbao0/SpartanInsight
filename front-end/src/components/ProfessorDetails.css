@@ -1,0 +1,123 @@
+.professor-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    color: #2c3e50;
+  }
+  
+  .professor-header {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .professor-header h1 {
+    font-size: 2.5rem;
+    color: #34495e;
+  }
+  
+  .professor-header p {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  .add-review-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #3498db;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-review-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .reviews-section {
+    margin-top: 2rem;
+  }
+  
+  .reviews-section h2 {
+    font-size: 2rem;
+    color: #34495e;
+    margin-bottom: 1rem;
+  }
+  
+  .reviews-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .review-item {
+    background-color: #ffffff;
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .review-comment {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+  }
+  
+  .review-rating {
+    font-size: 1rem;
+    color: #16a085;
+    margin-bottom: 0.5rem;
+  }
+  
+  .review-user {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    text-align: right;
+  }
+  
+  .reaction-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .reaction-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .reaction-button:hover {
+    background: #f0f0f0;
+  }
+  
+  .reaction-button.active {
+    background: var(--school-blue);
+    color: white;
+  }
+  
+  .review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .review-user {
+    margin: 0;
+  }
+
+  

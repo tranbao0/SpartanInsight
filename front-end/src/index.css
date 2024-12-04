@@ -1,0 +1,64 @@
+:root {
+  /* Colors */
+  --school-blue: #0055A2;
+  --school-gold: #E5A823;
+  --background-color: white;
+  
+  /* Typography */
+  --global-font-family: 'Rajdhani', sans-serif;
+  --heading-font-size: 2rem;
+  --body-font-size: 1rem;
+  
+  /* Spacing */
+  --spacing-small: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 2rem;
+  
+  /* Button styles */
+  --button-padding: 0.625rem 1.25rem;
+  --button-font-size: 2rem;
+  --button-border-radius: 2rem;
+  --button-border-width: 0.2rem;
+  --button-gap: 1rem;
+}
+
+body {
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: 133.33%;
+  height: 133.33%;
+  overflow-x: hidden; 
+}
+
+
+/* Global styles */
+body {
+  font-family: var(--global-font-family);
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+}
+
+/* Common button styles */
+.button {
+  padding: var(--button-padding);
+  font-size: var(--global-font-family); 
+  font-family: var(--global-font-family);
+  border-radius: var(--button-border-radius);
+  border-width: var(--button-border-width);
+  border: none;
+  cursor: pointer;
+}
+
+/* Common input styles */
+.input {
+  padding: var(--spacing-medium);
+  border-radius: var(--button-border-radius);
+  border: 1px solid var(--school-blue);
+}
+
+/* Common heading styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--global-font-family);
+  color: var(--school-blue);
+}

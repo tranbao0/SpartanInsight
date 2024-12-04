@@ -1,0 +1,56 @@
+.create-professor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .create-professor h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+  
+  .create-professor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .form-group label {
+    font-size: 1.2rem;
+    color: #2c3e50;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .primary-button {
+    background-color: #3498db;
+    color: white;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .primary-button:hover {
+    background-color: #2980b9;
+  }
+  
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+  }
+  

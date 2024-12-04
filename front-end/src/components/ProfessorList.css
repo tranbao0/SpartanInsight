@@ -1,0 +1,76 @@
+/* ProfessorList.css */
+
+.professor-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .professor-list-header {
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .professor-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .professor-button {
+    background-color: #3498db;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+  }
+  
+  .professor-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+  }
+  
+  .professor-button:active {
+    background-color: #1f618d;
+  }
+  
+  .professor-list-error {
+    color: #e74c3c;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .create-professor-link {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .tiny-link {
+    font-size: 0.9rem;
+    color: #3498db;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s ease;
+  }
+  
+  .tiny-link:hover {
+    color: #2980b9;
+  }
+  

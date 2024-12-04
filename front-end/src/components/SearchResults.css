@@ -1,0 +1,71 @@
+/* Centering and Layout */
+.search-results-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.search-results-header {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.results-section {
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.section-header {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* Results List */
+.results-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 600px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.no-results {
+  color: #888;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Result Button */
+.result-button {
+  width: 80%;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.result-button:hover {
+  background: #0056b3;
+  transform: translateY(-3px);
+}
+
+.result-button:active {
+  transform: translateY(0);
+}
+
+.result-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}

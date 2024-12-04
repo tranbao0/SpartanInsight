@@ -1,0 +1,137 @@
+/* Container styles */
+.logged-in-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header styles */
+  header {
+    padding: 20px;
+    background-color: var(--school-gold);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  header button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--school-blue);
+  }
+  
+  header h1 {
+    margin: 0;
+    color: var(--school-blue);
+  }
+  
+  /* Main content styles */
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+  }
+  
+  /* Toggle buttons styles */
+  .toggle-buttons {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .transition-button {
+    padding: 10px 20px;
+    border: 2px solid var(--school-blue);
+    border-radius: 5px;
+    cursor: pointer;
+    background: white;
+    color: var(--school-blue);
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.3s ease;
+  }
+  
+  .transition-button.active {
+    background: var(--school-blue);
+    color: white;
+  }
+  
+  /* Content section styles */
+  .content-section {
+    position: relative;
+    min-height: calc(100vh - 200px);
+    overflow: hidden;
+  }
+  
+  .content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .view-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .view-container.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  
+  .transitioning .view-container {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 70%;
+    max-width: 60rem;
+    padding: 1.5rem;
+    border-radius: 8rem;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    font-family: var(--global-font-family);
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .search-input:focus {
+    box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    .search-input {
+      width: 90%;
+      padding: 1.2rem;
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .search-input {
+      width: 95%;
+      padding: 1rem;
+      font-size: 1.2rem;
+    }
+  }
