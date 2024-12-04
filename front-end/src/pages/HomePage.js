@@ -1,10 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
-
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search?query=${query}`);
+    }
+  };
   useEffect(() => {
     const title = document.querySelector('.home-page header h1');
     const subtitle = document.querySelector('.home-page header h2');
@@ -124,7 +129,15 @@ const HomePage = () => {
           <h1><strong>Spartan Insights</strong></h1>
           <h2>FIND, RATE, AND REVIEW SJSU PROFESSORS AND COURSES</h2>
         </header>
-        <input type="text" aria-label="search" placeholder="Search Course or Professor" />
+        <div className="search-bar">
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for professors or courses..."
+        />
+        <button onClick={handleSearch}>Search</button>
+      </div>
         <div className="content-buttons">
           <button className="button" onClick={() => navigate('/listings?view=courses')}>View Courses</button>
           <button className="button" onClick={() => navigate('/listings?view=professors')}>View Professors</button>

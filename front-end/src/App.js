@@ -11,6 +11,7 @@ import CreateCourse from "./pages/CreateCourse";
 import CourseList from "./components/CourseList";
 import CourseDetails from "./components/CourseDetails";
 import ListingsPage from "./pages/ListingsPage";
+import SearchResults from "./components/SearchResults";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +41,7 @@ const App = () => {
           path="/signup" 
           element={isLoggedIn ? <Navigate to="/home" /> : <SignUpPage />} 
         />
+        <Route path="/search" element={<SearchResults />} />
 
         {/* Private routes */}
         <Route 

@@ -6,6 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const courseRoutes = require('./routes/courseRoutes'); // Import course routes
+const searchRoutes = require('./routes/search');
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/professors', professorRoutes); // Professors routes
 app.use('/api/reviews', reviewRoutes); // Reviews routes
 app.use('/api/courses', courseRoutes); // New courses routes
+app.use('/api/search', searchRoutes);
 
 // Test routes
 app.get('/', (req, res) => {

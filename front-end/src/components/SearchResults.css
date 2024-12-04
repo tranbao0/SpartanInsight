@@ -1,0 +1,40 @@
+/* HomePage.css */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .search-bar input {
+    width: 300px;
+    padding: 10px;
+    margin-right: 10px;
+  }
+  
+  .search-bar button {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  /* SearchResults.css */
+  .search-results {
+    padding: 20px;
+  }
+  
+  .results-section {
+    margin: 20px 0;
+  }
+  
+  .results-section h2 {
+    margin-bottom: 10px;
+  }
+  
+  .results-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .results-section li {
+    margin-bottom: 10px;
+  }
+  
